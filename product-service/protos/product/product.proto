@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "/product";
+
+service ProductService {
+    rpc Create(Product) returns (Product);
+    rpc Get(GetProductRequest) returns (Product);
+    rpc GetAll(GetAllRequest) returns (GetAllResponse);
+    rpc Update(Product) returns (Product);
+    rpc Delete(GetProductRequest) returns (Product);
+}
+
+message Product{
+    string id = 1;
+    string product_name = 2;
+    int64 product_price = 3;
+    string product_about = 4;
+    string created_at = 6;
+    string updeted_at = 7;
+    string deleted_at = 8;
+}
+
+message GetProductRequest {
+    int64 id = 1;
+}
+
+message GetAllRequest{
+    int64 page=1;
+    int64 limit=2;
+}
+
+message GetAllResponse{
+    repeated Product products = 1;
+}
