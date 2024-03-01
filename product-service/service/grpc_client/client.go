@@ -23,7 +23,7 @@ func (s *serviceManager) UserService() pbu.UserServiceClient {
 
 func New(cfg config.Config) (IServiceManager, error) {
 	UserConnection, err := grpc.Dial(
-		fmt.Sprintf("%s:%d", cfg.ProductServiceHost, cfg.ProductServicePort),
+		fmt.Sprintf("%s:%d", cfg.UserServiceHost, cfg.UserServicePort),
 		grpc.WithInsecure())
 	if err != nil {
 		return nil, err

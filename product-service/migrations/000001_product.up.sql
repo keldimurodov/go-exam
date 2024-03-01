@@ -1,5 +1,5 @@
 CREATE TABLE product(
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    id UUID,
     product_name VARCHAR(100),
     product_price INT,
     product_about VARCHAR(300),

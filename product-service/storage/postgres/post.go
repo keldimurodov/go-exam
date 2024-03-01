@@ -2,6 +2,7 @@ package postgres
 
 import (
 	pb "go-exam/product-service/genproto/product"
+	"log"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -36,16 +37,14 @@ func (r *proRepo) Create(product *pb.Product) (*pb.Product, error) {
 		product_price, 
 		product_about,
 		created_at,
-		updeted_at,
-		deleted_at `
+		updeted_at`
 	err := r.db.QueryRow(query, product.Id, product.ProductName, product.ProductPrice, product.ProductAbout).Scan(
 		&res.Id,
 		&res.ProductName,
 		&res.ProductPrice,
 		&res.ProductAbout,
 		&res.CreatedAt,
-		&res.UpdetedAt,
-		&res.DeletedAt)
+		&res.UpdetedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -53,32 +52,33 @@ func (r *proRepo) Create(product *pb.Product) (*pb.Product, error) {
 	return &res, nil
 }
 
-func (r *proRepo) Get(id *pb.GetProductRequest) (*pb.Product, error) {
-	var product pb.Product
+func (r *proRepo) Get(produ *pb.GetRequest) (*pb.Product, error) {
+
+	var res pb.Product
 
 	query := `SELECT
-	 	id, 
-		product_name,
-		product_price,
+		id, 
+		product_name, 
+		product_price, 
 		product_about,
 		created_at,
-		updeted_at,
-		deleted_at
-		from product where id=$1`
-
-	err := r.db.QueryRow(query, id.Id).Scan(
-		&product.Id,
-		&product.ProductName,
-		&product.ProductPrice,
-		&product.ProductAbout,
-		&product.CreatedAt,
-		&product.UpdetedAt,
-		&product.DeletedAt)
+		updeted_at, 
+		deleted_at 
+		FROM product 
+		WHERE id = $1`
+	err := r.db.QueryRow(query, produ.Id).Scan(
+		&res.Id,
+		&res.ProductName,
+		&res.ProductPrice,
+		&res.ProductAbout,
+		&res.CreatedAt,
+		&res.UpdetedAt,
+		)
 	if err != nil {
 		return nil, err
 	}
 
-	return &product, nil
+	return &res, nil
 }
 
 func (r *proRepo) GetAll(product *pb.GetAllRequest) (*pb.GetAllResponse, error) {
@@ -90,8 +90,7 @@ func (r *proRepo) GetAll(product *pb.GetAllRequest) (*pb.GetAllResponse, error) 
 		product_price,
 		product_about,
 		created_at,
-		updeted_at,
-		deleted_at
+		updeted_at
 	FROM 
 		product
 	WHERE 
@@ -116,8 +115,7 @@ func (r *proRepo) GetAll(product *pb.GetAllRequest) (*pb.GetAllResponse, error) 
 			&pr.ProductPrice,
 			&pr.ProductAbout,
 			&pr.CreatedAt,
-			&pr.UpdetedAt,
-			&pr.DeletedAt)
+			&pr.UpdetedAt)
 
 		if err != nil {
 			return nil, err
@@ -128,49 +126,43 @@ func (r *proRepo) GetAll(product *pb.GetAllRequest) (*pb.GetAllResponse, error) 
 	return &allProduct, nil
 }
 
-func (r *proRepo) Update(product *pb.Product) (*pb.Product, error) {
-	var res pb.Product
-
+func (r *proRepo) Update(prr *pb.Product) (*pb.Product, error) {
 	query := `
 	UPDATE
 		product
 	SET
-		product_name=$1,
-		product_price=$2,
-		product_about=$3,
-		updeted_at=CURRENT_TIMESTAMP
+		product_name = $1,
+		product_price = $2,
+		product_about = $3,
+		updeted_at = CURRENT_TIMESTAMP
 	WHERE
-		id=$4
-	returning
-		id, 
-		product_name,
-		product_price,
-		product_about,
-		created_at,
-		updeted_at,
-		deleted_at
-	`
-	err := r.db.QueryRow(
-		query,
-		product.ProductName,
-		product.ProductPrice,
-		product.ProductAbout,
-		product.Id).Scan(
-		&res.Id,
-		&res.ProductName,
-		&res.ProductPrice,
-		&res.ProductAbout,
-		&res.CreatedAt,
-		&res.UpdetedAt,
-		&res.DeletedAt)
+		id = $4
+	RETURNING
+	id, 
+	product_name, 
+	product_price, 
+	product_about,
+	created_at,
+	updeted_at`
+
+	var respUser pb.Product
+	err := r.db.QueryRow(query, prr.ProductName, prr.ProductPrice, prr.ProductAbout, prr.Id).Scan(
+        &respUser.Id,
+        &respUser.ProductName,
+        &respUser.ProductPrice,
+        &respUser.ProductAbout,
+		&respUser.CreatedAt,
+        &respUser.UpdetedAt,
+	)
+
 	if err != nil {
+		log.Println("Error updating user in postgres")
 		return nil, err
 	}
-
-	return &res, nil
+	return &respUser, nil
 }
 
-func (r *proRepo) Delete(pr *pb.GetProductRequest) (*pb.Product, error) {
+func (r *proRepo) Delete(pr *pb.GetRequest) (*pb.Product, error) {
 	
 	var res pb.Product
 

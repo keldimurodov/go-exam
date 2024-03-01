@@ -18,13 +18,21 @@ type PostService struct {
 }
 
 // Delete implements product.ProductServiceServer.
-func (s *PostService) Delete(context.Context, *pb.GetProductRequest) (*pb.Product, error) {
-	panic("unimplemented")
+func (s *PostService) Delete(ctx context.Context, req *pb.GetRequest) (*pb.Product, error) {
+	pro, err := s.storage.Product().Delete(req)
+	if err != nil {
+		return nil, err
+	}
+	return pro, nil
 }
 
 // Update implements product.ProductServiceServer.
-func (s *PostService) Update(context.Context, *pb.Product) (*pb.Product, error) {
-	panic("unimplemented")
+func (s *PostService) Update(ctx context.Context, req *pb.Product) (*pb.Product, error) {
+	pro, err := s.storage.Product().Update(req)
+	if err != nil {
+		return nil, err
+	}
+	return pro, nil
 }
 
 // NewPostService ...
@@ -44,7 +52,8 @@ func (s *PostService) Create(ctx context.Context, req *pb.Product) (*pb.Product,
 	return pro, nil
 }
 
-func (s *PostService) Get(ctx context.Context, req *pb.GetProductRequest) (*pb.Product, error) {
+func (s *PostService) Get(ctx context.Context, req *pb.GetRequest) (*pb.Product, error) {
+	
 	pro, err := s.storage.Product().Get(req)
 	if err != nil {
 		s.logger.Error(err.Error())
