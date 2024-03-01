@@ -121,25 +121,25 @@ func (m *Product) GetDeletedAt() string {
 	return ""
 }
 
-type GetProductRequest struct {
-	Id                   int64    `protobuf:"varint,1,opt,name=id,proto3" json:"id"`
+type GetRequest struct {
+	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetProductRequest) Reset()         { *m = GetProductRequest{} }
-func (m *GetProductRequest) String() string { return proto.CompactTextString(m) }
-func (*GetProductRequest) ProtoMessage()    {}
-func (*GetProductRequest) Descriptor() ([]byte, []int) {
+func (m *GetRequest) Reset()         { *m = GetRequest{} }
+func (m *GetRequest) String() string { return proto.CompactTextString(m) }
+func (*GetRequest) ProtoMessage()    {}
+func (*GetRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_5f9f5dc4dd6fa6d7, []int{1}
 }
-func (m *GetProductRequest) XXX_Unmarshal(b []byte) error {
+func (m *GetRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetProductRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetProductRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -149,23 +149,23 @@ func (m *GetProductRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-func (m *GetProductRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetProductRequest.Merge(m, src)
+func (m *GetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetRequest.Merge(m, src)
 }
-func (m *GetProductRequest) XXX_Size() int {
+func (m *GetRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetProductRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetProductRequest.DiscardUnknown(m)
+func (m *GetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetProductRequest proto.InternalMessageInfo
+var xxx_messageInfo_GetRequest proto.InternalMessageInfo
 
-func (m *GetProductRequest) GetId() int64 {
+func (m *GetRequest) GetId() string {
 	if m != nil {
 		return m.Id
 	}
-	return 0
+	return ""
 }
 
 type GetAllRequest struct {
@@ -272,7 +272,7 @@ func (m *GetAllResponse) GetProducts() []*Product {
 
 func init() {
 	proto.RegisterType((*Product)(nil), "product.Product")
-	proto.RegisterType((*GetProductRequest)(nil), "product.GetProductRequest")
+	proto.RegisterType((*GetRequest)(nil), "product.GetRequest")
 	proto.RegisterType((*GetAllRequest)(nil), "product.GetAllRequest")
 	proto.RegisterType((*GetAllResponse)(nil), "product.GetAllResponse")
 }
@@ -280,30 +280,30 @@ func init() {
 func init() { proto.RegisterFile("product/product.proto", fileDescriptor_5f9f5dc4dd6fa6d7) }
 
 var fileDescriptor_5f9f5dc4dd6fa6d7 = []byte{
-	// 367 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x92, 0xcf, 0x4a, 0xeb, 0x40,
-	0x18, 0xc5, 0xef, 0x24, 0xbd, 0x69, 0xfb, 0xf5, 0xb6, 0x5c, 0x07, 0xff, 0x84, 0x80, 0xa1, 0xa6,
-	0x9b, 0x2e, 0x4a, 0x85, 0x16, 0x84, 0x6e, 0x84, 0xa8, 0xd0, 0x9d, 0x94, 0x88, 0x1b, 0x37, 0x25,
-	0xed, 0x7c, 0x48, 0x20, 0x6d, 0xc6, 0x64, 0xe2, 0x93, 0xb8, 0xf0, 0x91, 0x5c, 0xfa, 0x08, 0xd2,
-	0xbe, 0x88, 0x64, 0x32, 0x53, 0x0b, 0x71, 0xa1, 0xab, 0xcc, 0xfc, 0xce, 0x39, 0xe1, 0x3b, 0x33,
-	0x03, 0x47, 0x3c, 0x4d, 0x58, 0xbe, 0x14, 0xe7, 0xea, 0x3b, 0xe4, 0x69, 0x22, 0x12, 0x5a, 0x57,
-	0x5b, 0x6f, 0x4b, 0xa0, 0x3e, 0x2b, 0xd7, 0xb4, 0x03, 0x46, 0xc4, 0x6c, 0xd2, 0x25, 0xfd, 0x66,
-	0x60, 0x44, 0x8c, 0x9e, 0xc1, 0x3f, 0x65, 0x9b, 0xaf, 0xc3, 0x15, 0xda, 0x86, 0x54, 0x5a, 0x8a,
-	0xdd, 0x86, 0x2b, 0xa4, 0x3d, 0x68, 0x6b, 0x0b, 0x4f, 0xa3, 0x25, 0xda, 0x66, 0x97, 0xf4, 0xcd,
-	0x40, 0xe7, 0x66, 0x05, 0xdb, 0x37, 0x85, 0x8b, 0x24, 0x17, 0x76, 0x4d, 0xfe, 0x48, 0x9b, 0xfc,
-	0x82, 0xd1, 0x53, 0x80, 0x65, 0x8a, 0xa1, 0x40, 0x36, 0x0f, 0x85, 0x6d, 0x49, 0x47, 0x53, 0x11,
-	0x5f, 0xca, 0x39, 0x67, 0xa8, 0xe4, 0x7a, 0x29, 0x2b, 0x52, 0xca, 0x0c, 0x63, 0x2d, 0x37, 0x4a,
-	0x59, 0x11, 0x5f, 0x78, 0x3d, 0x38, 0x98, 0xa2, 0x50, 0x3d, 0x03, 0x7c, 0xca, 0x31, 0xdb, 0xaf,
-	0x6b, 0x16, 0x75, 0xbd, 0x09, 0xb4, 0xa7, 0x28, 0xfc, 0x38, 0xd6, 0x06, 0x0a, 0x35, 0x1e, 0x3e,
-	0xa2, 0xb2, 0xc8, 0x35, 0x3d, 0x84, 0xbf, 0x71, 0xb4, 0x8a, 0x84, 0x3c, 0x0c, 0x33, 0x28, 0x37,
-	0xde, 0x25, 0x74, 0x74, 0x34, 0xe3, 0xc9, 0x3a, 0x43, 0x3a, 0x80, 0x86, 0xaa, 0x97, 0xd9, 0xa4,
-	0x6b, 0xf6, 0x5b, 0xa3, 0xff, 0x43, 0x7d, 0x05, 0x7a, 0x8e, 0x9d, 0x63, 0xf4, 0x62, 0x40, 0x47,
-	0xd1, 0x3b, 0x4c, 0x9f, 0x8b, 0x43, 0x1b, 0x80, 0x75, 0x2d, 0xdb, 0xd3, 0x4a, 0xd0, 0xa9, 0x10,
-	0x3a, 0x06, 0x73, 0x8a, 0x82, 0x3a, 0x3b, 0xa1, 0x52, 0xf7, 0x9b, 0xd0, 0x04, 0xac, 0x72, 0x6a,
-	0x7a, 0xbc, 0x9f, 0xfb, 0x3a, 0x01, 0xe7, 0xa4, 0xc2, 0x77, 0xf5, 0xac, 0x7b, 0xce, 0x7e, 0x3a,
-	0xdd, 0x05, 0x58, 0x37, 0xf2, 0x2e, 0x7e, 0x37, 0xe0, 0x95, 0xf3, 0xb6, 0x71, 0xc9, 0xfb, 0xc6,
-	0x25, 0x1f, 0x1b, 0x97, 0xbc, 0x6e, 0xdd, 0x3f, 0x0f, 0x0d, 0xfd, 0x8e, 0x17, 0x96, 0x7c, 0xc8,
-	0xe3, 0xcf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x6e, 0x7b, 0xab, 0x76, 0xe1, 0x02, 0x00, 0x00,
+	// 360 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0xcd, 0x4e, 0xc2, 0x40,
+	0x14, 0x85, 0x9d, 0x16, 0x0b, 0x5c, 0x84, 0x98, 0xf1, 0xaf, 0x21, 0xda, 0x60, 0xdd, 0xb0, 0x20,
+	0x90, 0xe0, 0x8a, 0x8d, 0x49, 0xd5, 0x84, 0x9d, 0x21, 0x35, 0x6e, 0xdc, 0x90, 0xc2, 0xdc, 0x98,
+	0x26, 0x85, 0x8e, 0xed, 0xd4, 0x47, 0xf0, 0x19, 0x7c, 0x24, 0x97, 0x3e, 0x82, 0x81, 0x17, 0x31,
+	0x4c, 0x67, 0x0a, 0x49, 0x5d, 0xb0, 0xea, 0xcc, 0x39, 0xdf, 0x6d, 0xee, 0x39, 0x19, 0x38, 0xe3,
+	0x49, 0xcc, 0xb2, 0xb9, 0x18, 0xa8, 0x6f, 0x9f, 0x27, 0xb1, 0x88, 0x69, 0x55, 0x5d, 0xdd, 0x35,
+	0x81, 0xea, 0x24, 0x3f, 0xd3, 0x16, 0x18, 0x21, 0xb3, 0x49, 0x87, 0x74, 0xeb, 0xbe, 0x11, 0x32,
+	0x7a, 0x0d, 0x47, 0x0a, 0x9b, 0x2e, 0x83, 0x05, 0xda, 0x86, 0x74, 0x1a, 0x4a, 0x7b, 0x0a, 0x16,
+	0x48, 0x6f, 0xa0, 0xa9, 0x11, 0x9e, 0x84, 0x73, 0xb4, 0xcd, 0x0e, 0xe9, 0x9a, 0xbe, 0x9e, 0x9b,
+	0x6c, 0xb4, 0x5d, 0x28, 0x98, 0xc5, 0x99, 0xb0, 0x2b, 0xf2, 0x47, 0x1a, 0xf2, 0x36, 0x1a, 0xbd,
+	0x02, 0x98, 0x27, 0x18, 0x08, 0x64, 0xd3, 0x40, 0xd8, 0x96, 0x24, 0xea, 0x4a, 0xf1, 0xa4, 0x9d,
+	0x71, 0x86, 0xca, 0xae, 0xe6, 0xb6, 0x52, 0x72, 0x9b, 0x61, 0xa4, 0xed, 0x5a, 0x6e, 0x2b, 0xc5,
+	0x13, 0xee, 0x25, 0xc0, 0x18, 0x85, 0x8f, 0xef, 0x19, 0xa6, 0xa5, 0x9c, 0xee, 0x08, 0x9a, 0x63,
+	0x14, 0x5e, 0x14, 0x69, 0x80, 0x42, 0x85, 0x07, 0x6f, 0x28, 0x11, 0xd3, 0x97, 0x67, 0x7a, 0x0a,
+	0x87, 0x51, 0xb8, 0x08, 0x85, 0x6c, 0xc1, 0xf4, 0xf3, 0x8b, 0x7b, 0x07, 0x2d, 0x3d, 0x9a, 0xf2,
+	0x78, 0x99, 0x22, 0xed, 0x41, 0x4d, 0xe5, 0x4a, 0x6d, 0xd2, 0x31, 0xbb, 0x8d, 0xe1, 0x71, 0x5f,
+	0x77, 0xaf, 0x8a, 0xf6, 0x0b, 0x62, 0xf8, 0x69, 0x40, 0x4b, 0xa9, 0xcf, 0x98, 0x7c, 0x6c, 0xda,
+	0xea, 0x81, 0xf5, 0x20, 0x63, 0xd3, 0xd2, 0x60, 0xbb, 0xa4, 0xd0, 0x1e, 0x98, 0x63, 0x14, 0xf4,
+	0xa4, 0x30, 0xb6, 0x39, 0xff, 0xa1, 0x47, 0x60, 0xe5, 0xeb, 0xd2, 0xf3, 0xdd, 0x81, 0x6d, 0xf4,
+	0xf6, 0x45, 0x49, 0x2f, 0x72, 0x59, 0x2f, 0x9c, 0xed, 0xbb, 0xd6, 0x00, 0xac, 0x47, 0xd9, 0xfe,
+	0x9e, 0x9b, 0xdd, 0xb7, 0xbf, 0x57, 0x0e, 0xf9, 0x59, 0x39, 0xe4, 0x77, 0xe5, 0x90, 0xaf, 0xb5,
+	0x73, 0xf0, 0x5a, 0xd3, 0x4f, 0x76, 0x66, 0xc9, 0x37, 0x7b, 0xfb, 0x17, 0x00, 0x00, 0xff, 0xff,
+	0x1a, 0x7d, 0xcf, 0x99, 0xcc, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -319,10 +319,10 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ProductServiceClient interface {
 	Create(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
-	Get(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error)
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*Product, error)
 	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error)
 	Update(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
-	Delete(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error)
+	Delete(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*Product, error)
 }
 
 type productServiceClient struct {
@@ -342,7 +342,7 @@ func (c *productServiceClient) Create(ctx context.Context, in *Product, opts ...
 	return out, nil
 }
 
-func (c *productServiceClient) Get(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error) {
+func (c *productServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*Product, error) {
 	out := new(Product)
 	err := c.cc.Invoke(ctx, "/product.ProductService/Get", in, out, opts...)
 	if err != nil {
@@ -369,7 +369,7 @@ func (c *productServiceClient) Update(ctx context.Context, in *Product, opts ...
 	return out, nil
 }
 
-func (c *productServiceClient) Delete(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*Product, error) {
+func (c *productServiceClient) Delete(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*Product, error) {
 	out := new(Product)
 	err := c.cc.Invoke(ctx, "/product.ProductService/Delete", in, out, opts...)
 	if err != nil {
@@ -381,10 +381,10 @@ func (c *productServiceClient) Delete(ctx context.Context, in *GetProductRequest
 // ProductServiceServer is the server API for ProductService service.
 type ProductServiceServer interface {
 	Create(context.Context, *Product) (*Product, error)
-	Get(context.Context, *GetProductRequest) (*Product, error)
+	Get(context.Context, *GetRequest) (*Product, error)
 	GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error)
 	Update(context.Context, *Product) (*Product, error)
-	Delete(context.Context, *GetProductRequest) (*Product, error)
+	Delete(context.Context, *GetRequest) (*Product, error)
 }
 
 // UnimplementedProductServiceServer can be embedded to have forward compatible implementations.
@@ -394,7 +394,7 @@ type UnimplementedProductServiceServer struct {
 func (*UnimplementedProductServiceServer) Create(ctx context.Context, req *Product) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (*UnimplementedProductServiceServer) Get(ctx context.Context, req *GetProductRequest) (*Product, error) {
+func (*UnimplementedProductServiceServer) Get(ctx context.Context, req *GetRequest) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
 func (*UnimplementedProductServiceServer) GetAll(ctx context.Context, req *GetAllRequest) (*GetAllResponse, error) {
@@ -403,7 +403,7 @@ func (*UnimplementedProductServiceServer) GetAll(ctx context.Context, req *GetAl
 func (*UnimplementedProductServiceServer) Update(ctx context.Context, req *Product) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (*UnimplementedProductServiceServer) Delete(ctx context.Context, req *GetProductRequest) (*Product, error) {
+func (*UnimplementedProductServiceServer) Delete(ctx context.Context, req *GetRequest) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 
@@ -430,7 +430,7 @@ func _ProductService_Create_Handler(srv interface{}, ctx context.Context, dec fu
 }
 
 func _ProductService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductRequest)
+	in := new(GetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -442,7 +442,7 @@ func _ProductService_Get_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/product.ProductService/Get",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServiceServer).Get(ctx, req.(*GetProductRequest))
+		return srv.(ProductServiceServer).Get(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -484,7 +484,7 @@ func _ProductService_Update_Handler(srv interface{}, ctx context.Context, dec fu
 }
 
 func _ProductService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductRequest)
+	in := new(GetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -496,7 +496,7 @@ func _ProductService_Delete_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/product.ProductService/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServiceServer).Delete(ctx, req.(*GetProductRequest))
+		return srv.(ProductServiceServer).Delete(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -604,7 +604,7 @@ func (m *Product) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *GetProductRequest) Marshal() (dAtA []byte, err error) {
+func (m *GetRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -614,12 +614,12 @@ func (m *GetProductRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetProductRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetProductRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -628,10 +628,12 @@ func (m *GetProductRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Id != 0 {
-		i = encodeVarintProduct(dAtA, i, uint64(m.Id))
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintProduct(dAtA, i, uint64(len(m.Id)))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -764,14 +766,15 @@ func (m *Product) Size() (n int) {
 	return n
 }
 
-func (m *GetProductRequest) Size() (n int) {
+func (m *GetRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Id != 0 {
-		n += 1 + sovProduct(uint64(m.Id))
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovProduct(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1083,7 +1086,7 @@ func (m *Product) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetProductRequest) Unmarshal(dAtA []byte) error {
+func (m *GetRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1106,17 +1109,17 @@ func (m *GetProductRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetProductRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetProductRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 			}
-			m.Id = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowProduct
@@ -1126,11 +1129,24 @@ func (m *GetProductRequest) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Id |= int64(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthProduct
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthProduct
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipProduct(dAtA[iNdEx:])
