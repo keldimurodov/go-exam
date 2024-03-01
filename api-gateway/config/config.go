@@ -19,6 +19,15 @@ type Config struct {
 	// context timeout in seconds
 	CtxTimeout int
 
+
+	// casbin
+	AuthConfigPath string
+	CSVFilePath    string
+
+	// JWT
+	SigningKey        string
+	AccessTokenTimout int
+
 	LogLevel string
 	HTTPPort string
 }
@@ -32,10 +41,10 @@ func Load() Config {
 	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "debug"))
 	c.HTTPPort = cast.ToString(getOrReturnDefault("HTTP_PORT", ":8080"))
 
-	c.UserServiceHost = cast.ToString(getOrReturnDefault("USER_SERVICE_HOST", "127.0.0.1"))
+	c.UserServiceHost = cast.ToString(getOrReturnDefault("USER_SERVICE_HOST", "localhost"))
 	c.UserServicePort = cast.ToInt(getOrReturnDefault("USER_SERVICE_PORT", 9000))
 
-	c.ProductServiceHost = cast.ToString(getOrReturnDefault("PRODUCT_SERVICE_HOST", "127.0.0.1"))
+	c.ProductServiceHost = cast.ToString(getOrReturnDefault("PRODUCT_SERVICE_HOST", "localhost"))
 	c.ProductServicePort = cast.ToInt(getOrReturnDefault("PRODUCT_SERVICE_PORT", 8081))
 
 	c.CtxTimeout = cast.ToInt(getOrReturnDefault("CTX_TIMEOUT", 7))

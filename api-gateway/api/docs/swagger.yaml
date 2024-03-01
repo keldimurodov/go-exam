@@ -18,6 +18,8 @@ definitions:
         type: string
       product_price:
         type: integer
+      refresh_token:
+        type: string
       updated_at:
         type: string
     type: object
@@ -70,6 +72,128 @@ info:
   title: Welcome to ProductAPI
   version: "1.0"
 paths:
+  /v1/all/:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of products
+      parameters:
+      - description: Page
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: Limit
+        in: path
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: All products
+      tags:
+      - product
+  /v1/create/:
+    post:
+      consumes:
+      - application/json
+      description: Api for creating a new product
+      parameters:
+      - description: createProduct
+        in: body
+        name: Product
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateProduct ...
+      tags:
+      - product
+  /v1/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Api deletes product
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteProduct
+      tags:
+      - product
+  /v1/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Api for getting product by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetProduct
+      tags:
+      - product
   /v1/login:
     get:
       consumes:
@@ -106,140 +230,6 @@ paths:
       summary: LogIn User
       tags:
       - registr
-  /v1/product/:
-    get:
-      consumes:
-      - application/json
-      description: Api returns list of products
-      parameters:
-      - description: Page
-        in: path
-        name: page
-        required: true
-        type: integer
-      - description: Limit
-        in: path
-        name: limit
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-      security:
-      - ApiKeyAuth: []
-      summary: All products
-      tags:
-      - product
-    post:
-      consumes:
-      - application/json
-      description: Api for creating a new user
-      parameters:
-      - description: createProduct
-        in: body
-        name: Product
-        required: true
-        schema:
-          $ref: '#/definitions/models.Product'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Product'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-      security:
-      - ApiKeyAuth: []
-      summary: CreateProduct ...
-      tags:
-      - product
-  /v1/product/{id}:
-    delete:
-      consumes:
-      - application/json
-      description: Api deletes product
-      produces:
-      - application/json
-      responses:
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-      security:
-      - ApiKeyAuth: []
-      summary: DeleteProduct
-      tags:
-      - product
-    get:
-      consumes:
-      - application/json
-      description: Api for getting product by id
-      parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Product'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-      security:
-      - ApiKeyAuth: []
-      summary: GetProduct
-      tags:
-      - product
-    put:
-      consumes:
-      - application/json
-      description: Api returns updates user
-      produces:
-      - application/json
-      responses:
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/models.StandardErrorModel'
-      security:
-      - ApiKeyAuth: []
-      summary: UpdateProduct
-      tags:
-      - product
   /v1/sign/:
     post:
       consumes:
@@ -272,6 +262,34 @@ paths:
       summary: Sign User
       tags:
       - registr
+  /v1/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Api returns updates user
+      parameters:
+      - description: UpdateProduct
+        in: body
+        name: Product
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: UpdateProduct
+      tags:
+      - product
   /v1/users/:
     get:
       consumes:

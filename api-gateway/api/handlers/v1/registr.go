@@ -41,6 +41,8 @@ func (h *handlerV1) SignUp(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(body)
+
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 
@@ -51,8 +53,6 @@ func (h *handlerV1) SignUp(c *gin.Context) {
 		Password:  body.Password,
 	})
 
-	fmt.Println(response)
-
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -61,7 +61,7 @@ func (h *handlerV1) SignUp(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, response)
+	c.JSON(http.StatusOK, response)
 
 }
 

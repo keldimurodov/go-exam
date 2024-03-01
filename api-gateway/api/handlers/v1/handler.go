@@ -1,7 +1,8 @@
 package v1
 
 import (
-	"go-exam/api-gateway/api/handlers/models"
+	models "go-exam/api-gateway/api/handlers/models"
+	tokens "go-exam/api-gateway/api/handlers/tokens"
 	"go-exam/api-gateway/config"
 	"go-exam/api-gateway/pkg/logger"
 	"go-exam/api-gateway/services"
@@ -14,13 +15,15 @@ type handlerV1 struct {
 	log            logger.Logger
 	serviceManager services.IServiceManager
 	cfg            config.Config
+	jwthandler     tokens.JWTHandler
 }
 
-// HandlerV1Config ...
+// handlerV1Config ...
 type HandlerV1Config struct {
 	Logger         logger.Logger
 	ServiceManager services.IServiceManager
 	Cfg            config.Config
+	JWTHandler     tokens.JWTHandler
 }
 
 // New ...
@@ -29,6 +32,7 @@ func New(c *HandlerV1Config) *handlerV1 {
 		log:            c.Logger,
 		serviceManager: c.ServiceManager,
 		cfg:            c.Cfg,
+		jwthandler:     c.JWTHandler,
 	}
 }
 

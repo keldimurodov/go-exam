@@ -48,11 +48,11 @@ func New(option Option) *gin.Engine {
 	api.DELETE("/users/:id", handlerV1.DeleteUser)
 
 	// product
-	api.POST("/products", handlerV1.Create)
-	api.GET("/products/:id", handlerV1.Get)
-	api.GET("/products", handlerV1.GetAll)
-	api.PUT("/products/:id", handlerV1.Update)
-	api.DELETE("/products/:id", handlerV1.Delete)
+	api.POST("/create", handlerV1.Create)
+	api.GET("/get/:id", handlerV1.Get)
+	api.GET("/all", handlerV1.GetAll)
+	api.PUT("/update/:id", handlerV1.Update)
+	api.DELETE("/delete/:id", handlerV1.Delete)
 
 	// register
 	api.POST("/sign", handlerV1.SignUp)

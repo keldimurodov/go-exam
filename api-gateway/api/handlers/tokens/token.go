@@ -1,6 +1,9 @@
-package token
+package tokens
 
 import (
+	// "api-gateway/pkg/logger"
+	"go-exam/api-gateway/config"
+	"go-exam/api-gateway/pkg/logger"
 	"log"
 	"time"
 
@@ -10,13 +13,15 @@ import (
 // JWTHandler ...
 type JWTHandler struct {
 	Sub       string
+	Iss       string
 	Exp       string
 	Iat       string
 	Aud       []string
 	Role      string
 	SigninKey string
+	Log       logger.Logger
 	Token     string
-	Timout    int
+	Timeot    int
 }
 
 type CustomClaims struct {
@@ -40,13 +45,13 @@ func (jwtHandler *JWTHandler) GenerateAuthJWT() (access, refresh string, err err
 	refreshToken = jwt.New(jwt.SigningMethodHS256)
 	claims = accessToken.Claims.(jwt.MapClaims)
 	claims["sub"] = jwtHandler.Sub
-	claims["exp"] = time.Now().Add(time.Minute * time.Duration(jwtHandler.Timout)).Unix()
+	claims["exp"] = time.Now().Add(time.Minute * time.Duration(jwtHandler.Timeot)).Unix()
 	claims["iat"] = time.Now().Unix()
 	claims["role"] = jwtHandler.Role
 	claims["aud"] = jwtHandler.Aud
-	access, err = accessToken.SignedString([]byte(jwtHandler.SigninKey))
+	access, err = accessToken.SignedString([]byte(config.Load().SigningKey))
 	if err != nil {
-		log.Fatal("error generating access token", err)
+		log.Println("error generating access token", err)
 		return
 	}
 
@@ -54,7 +59,7 @@ func (jwtHandler *JWTHandler) GenerateAuthJWT() (access, refresh string, err err
 	rtClaims["sub"] = jwtHandler.Sub
 	refresh, err = refreshToken.SignedString([]byte(jwtHandler.SigninKey))
 	if err != nil {
-		log.Fatal("error generating refresh token", err)
+		log.Println("error generating refresh token", err)
 		return
 	}
 	return
@@ -76,7 +81,7 @@ func (jwtHandler *JWTHandler) ExtractClaims() (jwt.MapClaims, error) {
 
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !(ok && token.Valid) {
-		log.Fatal("invalid jwt token")
+		log.Println("invalid jwt token")
 		return nil, err
 	}
 	return claims, nil

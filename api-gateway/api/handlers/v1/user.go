@@ -2,6 +2,7 @@ package v1
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -42,11 +43,12 @@ func (h *handlerV1) CreateUser(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(body)
+
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 
 	response, err := h.serviceManager.UserService().Create(ctx, &pbu.User{
-		Id:        body.Id,
 		FirstName: body.Name,
 		LastName:  body.LastName,
 		Email:     body.Email,
