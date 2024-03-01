@@ -27,7 +27,7 @@ func (r *userRepo) Create(user *pbu.User) (*pbu.User, error) {
 			email,
 			password
 		)
-		VALUES ($1, $2, $3, $4, $5, $6) 
+		VALUES ($1, $2, $3, $4) 
 		RETURNING 
 			id, 
 			first_name, 
@@ -226,7 +226,7 @@ func SubVerification(db *sqlx.DB, user *pbu.UserDetail) (*pbu.User, error) {
 			email,
 			password
 		)
-		VALUES ($1, $2, $3, $4, $5, $6) 
+		VALUES ($1, $2, $3, $4) 
 		RETURNING 
 			id, 
 			first_name, 
@@ -241,9 +241,7 @@ func SubVerification(db *sqlx.DB, user *pbu.UserDetail) (*pbu.User, error) {
 		user.FirstName,
 		user.LastName,
 		user.Email,
-		user.Password,
-		"nil",
-		"nil").Scan(
+		user.Password).Scan(
 		&res.Id,
 		&res.FirstName,
 		&res.LastName,
