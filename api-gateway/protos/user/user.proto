@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "/user";
+
+service UserService {
+  rpc Create(User) returns (User);
+  rpc Get(GetUserRequest) returns (User);
+  rpc GetAll(GetAllRequest) returns (GetAllResponse);
+  rpc Delete(GetUserRequest) returns (User);
+  rpc Update(User) returns (User);
+  rpc CheckUniqueness(CheckUniquenessRequest) returns (CheckUniquenessResponse);
+  rpc Sign(UserDetail) returns (ResponseMessage);
+  rpc Verification(VerificationUserRequest) returns (User);
+  rpc Login(LoginRequest) returns (User);
+}
+
+message LoginRequest {
+  string Email = 1;
+  string Password = 2;
+}
+
+message VerificationUserRequest {
+  string Email = 1;
+  string Code = 2;
+}
+
+message ResponseMessage {
+  string Content = 1;
+}
+
+message UserDetail {
+	string FirstName = 1;
+	string LastName = 2;
+	string Email = 3;
+	string Password = 4;
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message GetAllRequest{
+  int64 page=1;
+  int64 limit=2;
+}
+
+message GetAllResponse{
+  repeated User users = 1 ;
+}
+
+
+message User {
+    string id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string email = 4;
+    string password = 5;
+    string created_at = 6;
+    string updeted_at = 7;
+    string deleted_at = 8;
+}
+
+message CheckUniquenessRequest {
+  string field = 1;
+  string value = 2;
+}
+
+message CheckUniquenessResponse {
+  bool result = 1;
+}
