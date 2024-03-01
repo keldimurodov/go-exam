@@ -1,0 +1,36 @@
+[
+    {
+        "first_name": "John",
+        "last_name": "Doe",
+        "picrute": "https://example.com/john-doe.jpg",
+        "bio": "Software Engineer"
+    }
+    ,
+    {
+        "first_name": "Alice",
+        "last_name": "Smith",
+        "picrute": "https://example.com/alice-smith.jpg",
+        "bio": "Graphic Designer"
+    }
+    ,
+    {
+        "first_name": "Michael",
+        "last_name": "Johnson",
+        "picrute": "https://example.com/michael-johnson.jpg",
+        "bio": "Marketing Specialist"
+    }
+    ,
+    {
+        "first_name": "Emily",
+        "last_name": "Davis",
+        "picrute": "https://example.com/emily-davis.jpg",
+        "bio": "Product Manager"
+    }
+    ,
+    {
+        "first_name": "Daniel",
+        "last_name": "Brown",
+        "picrute": "https://example.com/daniel-brown.jpg",
+        "bio": "UX/UI Designer"
+    }
+]

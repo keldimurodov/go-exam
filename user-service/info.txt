@@ -1,0 +1,9 @@
+postgres
+    admin 
+    note
+    user
+
+repo 
+    admin 
+    note
+    user

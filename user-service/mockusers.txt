@@ -1,0 +1,21 @@
+John id:   ce9b45bf-c4d6-11ee-980e-d8bbc174b998
+Alice id: e4a3a8ed-c4d6-11ee-980e-d8bbc174b998
+
+
+{
+    "first_name": "John",
+    "last_name": "Doe",
+    "picture": "https://example.com/johndoe.jpg",
+    "bio": "Web Developer",
+    "email": "john.doe@example.com",
+    "password": "hashed_password1"
+}
+
+{
+    "first_name": "Alice",
+    "last_name": "Smith",
+    "picture": "https://example.com/alicesmith.jpg",
+    "bio": "Data Scientist",
+    "email": "alice.smith@example.com",
+    "password": "hashed_password2"
+}
