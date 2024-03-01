@@ -29,22 +29,25 @@ func (r *proRepo) Create(product *pb.Product) (*pb.Product, error) {
 		id, 
 		product_name, 
 		product_price, 
-		product_about) 
-		VALUES ($1, $2, $3, $4) 
+		product_about,
+		refresh_token) 
+		VALUES ($1, $2, $3, $4, $5) 
 		RETURNING 
 		id, 
 		product_name, 
 		product_price, 
 		product_about,
 		created_at,
-		updeted_at`
-	err := r.db.QueryRow(query, product.Id, product.ProductName, product.ProductPrice, product.ProductAbout).Scan(
+		updeted_at,
+        refresh_token`
+	err := r.db.QueryRow(query, product.Id, product.ProductName, product.ProductPrice, product.ProductAbout, product.RefreshToken).Scan(
 		&res.Id,
 		&res.ProductName,
 		&res.ProductPrice,
 		&res.ProductAbout,
 		&res.CreatedAt,
-		&res.UpdetedAt)
+		&res.UpdetedAt,
+		&res.RefreshToken)
 	if err != nil {
 		return nil, err
 	}
@@ -55,17 +58,21 @@ func (r *proRepo) Create(product *pb.Product) (*pb.Product, error) {
 func (r *proRepo) Get(produ *pb.GetRequest) (*pb.Product, error) {
 
 	var res pb.Product
-
-	query := `SELECT
+	query := `
+	UPDATE
+		product
+	SET
+		deleted_at=CURRENT_TIMESTAMP
+	WHERE
+		id=$1
+	RETURNING
 		id, 
 		product_name, 
-		product_price, 
+		product_price,
 		product_about,
-		created_at,
-		updeted_at, 
-		deleted_at 
-		FROM product 
-		WHERE id = $1`
+        created_at,
+        updeted_at,
+        refresh_token`
 	err := r.db.QueryRow(query, produ.Id).Scan(
 		&res.Id,
 		&res.ProductName,
@@ -73,7 +80,7 @@ func (r *proRepo) Get(produ *pb.GetRequest) (*pb.Product, error) {
 		&res.ProductAbout,
 		&res.CreatedAt,
 		&res.UpdetedAt,
-		)
+		&res.DeletedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +180,15 @@ func (r *proRepo) Delete(pr *pb.GetRequest) (*pb.Product, error) {
 		deleted_at=CURRENT_TIMESTAMP
 	WHERE
 		id=$1
-	`
+	RETURNING
+	id, 
+    product_name, 
+    product_price, 
+    product_about,
+    created_at,
+	updeted_at,
+	deleted_at`
+
 	err := r.db.QueryRow(query, pr.Id).Scan(
 		&res.Id,
 		&res.ProductName,

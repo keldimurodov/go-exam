@@ -20,6 +20,7 @@ message Product{
     string created_at = 6;
     string updeted_at = 7;
     string deleted_at = 8;
+    string refresh_token = 9;
 }
 
 message GetRequest{
