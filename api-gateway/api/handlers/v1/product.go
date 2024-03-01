@@ -9,26 +9,26 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 
 	models "go-exam/api-gateway/api/handlers/models"
-	pbu "go-exam/api-gateway/genproto/user"
+	pbp "go-exam/api-gateway/genproto/product"
 	l "go-exam/api-gateway/pkg/logger"
 	"go-exam/api-gateway/pkg/utils"
 )
 
-// CreateUser ...
-// @Summary CreateUser
+// CreateProduct ...
+// @Summary CreateProduct ...
 // @Security ApiKeyAuth
-// @Description Api for creating a new user
-// @Tags user
+// @Description Api for creating a new product
+// @Tags product
 // @Accept json
 // @Produce json
-// @Param User body models.User true "createUserModel"
-// @Success 200 {object} models.User
+// @Param Product body models.Product true "createProduct"
+// @Success 200 {object} models.Product
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/users/ [post]
-func (h *handlerV1) CreateUser(c *gin.Context) {
+// @Router /v1/product/ [post]
+func (h *handlerV1) Create(c *gin.Context) {
 	var (
-		body        models.User
+		body        models.Product
 		jspbMarshal protojson.MarshalOptions
 	)
 	jspbMarshal.UseProtoNames = true
@@ -45,13 +45,16 @@ func (h *handlerV1) CreateUser(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 
-	response, err := h.serviceManager.UserService().Create(ctx, &pbu.User{
-		Id:        body.Id,
-		FirstName: body.Name,
-		LastName:  body.LastName,
-		Email:     body.Email,
-		Password:  body.Password,
+	response, err := h.serviceManager.ProductService().Create(ctx, &pbp.Product{
+		Id:           body.Id,
+		ProductName:  body.ProductName,
+		ProductPrice: body.ProductPrice,
+		ProductAbout: body.ProductAbout,
+		CreatedAt:    body.CreatedAt,
+		UpdetedAt:    body.UpdatedAt,
+		DeletedAt:    body.DeletedAt,
 	})
+
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -63,19 +66,19 @@ func (h *handlerV1) CreateUser(c *gin.Context) {
 	c.JSON(http.StatusCreated, response)
 }
 
-// GetUser gets user by id
-// @Summary GetUser
+// Get get product by id
+// @Summary GetProduct
 // @Security ApiKeyAuth
-// @Description Api for getting user by id
-// @Tags user
+// @Description Api for getting product by id
+// @Tags product
 // @Accept json
 // @Produce json
-// @Param id path string true "ID"
-// @Success 200 {object} models.User
+// @Param id path string true "id"
+// @Success 200 {object} models.Product
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/users/{id} [get]
-func (h *handlerV1) GetUser(c *gin.Context) {
+// @Router /v1/product/{id} [get]
+func (h *handlerV1) Get(c *gin.Context) {
 	var jspbMarshal protojson.MarshalOptions
 	jspbMarshal.UseProtoNames = true
 
@@ -84,9 +87,9 @@ func (h *handlerV1) GetUser(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 
-	response, err := h.serviceManager.UserService().Get(
-		ctx, &pbu.GetUserRequest{
-			UserId: id,
+	response, err := h.serviceManager.ProductService().Get(
+		ctx, &pbp.GetRequest{
+			Id: id,
 		})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -99,20 +102,20 @@ func (h *handlerV1) GetUser(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// ListUsers returns list of users
-// @Summary ListUser
+// ListProduct returns list of products
+// @Summary All products
 // @Security ApiKeyAuth
-// @Description Api returns list of users
-// @Tags user
+// @Description Api returns list of products
+// @Tags product
 // @Accept json
 // @Produce json
 // @Param page path int64 true "Page"
 // @Param limit path int64 true "Limit"
-// @Succes 200 {object} models.Users
+// @Succes 200 {object} models.Product
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/users/ [get]
-func (h *handlerV1) GetALlUsers(c *gin.Context) {
+// @Router /v1/product/ [get]
+func (h *handlerV1) GetAll(c *gin.Context) {
 	queryParams := c.Request.URL.Query()
 
 	params, errStr := utils.ParseQueryParams(queryParams)
@@ -130,8 +133,8 @@ func (h *handlerV1) GetALlUsers(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 
-	response, err := h.serviceManager.UserService().GetAll(
-		ctx, &pbu.GetAllRequest{
+	response, err := h.serviceManager.ProductService().GetAll(
+		ctx, &pbp.GetAllRequest{
 			Limit: params.Limit,
 			Page:  params.Page,
 		})
@@ -139,27 +142,27 @@ func (h *handlerV1) GetALlUsers(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
-		h.log.Error("failed to list users", l.Error(err))
+		h.log.Error("failed to list products", l.Error(err))
 		return
 	}
 
 	c.JSON(http.StatusOK, response)
 }
 
-// UpdateUser updates user by id
-// @Summary UpdateUser
+// UpdateProduct updates product by id
+// @Summary UpdateProduct
 // @Security ApiKeyAuth
 // @Description Api returns updates user
-// @Tags user
+// @Tags product
 // @Accept json
 // @Produce json
-// @Succes 200 {Object} models.User
+// @Succes 200 {Object} models.Product
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/users/{id} [put]
-func (h *handlerV1) UpdateUser(c *gin.Context) {
+// @Router /v1/product/{id} [put]
+func (h *handlerV1) Update(c *gin.Context) {
 	var (
-		body        pbu.User
+		body        pbp.Product
 		jspbMarshal protojson.MarshalOptions
 	)
 	jspbMarshal.UseProtoNames = true
@@ -177,7 +180,15 @@ func (h *handlerV1) UpdateUser(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 
-	response, err := h.serviceManager.UserService().Update(ctx, &body)
+	response, err := h.serviceManager.ProductService().Update(ctx, &pbp.Product{
+		Id: body.Id,
+		ProductName: body.ProductName,
+		ProductPrice: body.ProductPrice,
+		ProductAbout: body.ProductAbout,
+		CreatedAt:    body.CreatedAt,
+        UpdetedAt:    body.UpdetedAt,
+        DeletedAt:    body.DeletedAt,
+	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -189,18 +200,18 @@ func (h *handlerV1) UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// DeleteUser deletes user by id
-// @Summary DeleteUser
+// DeleteProduct deletes product by id
+// @Summary DeleteProduct
 // @Security ApiKeyAuth
-// @Description Api deletes user
-// @Tags user
+// @Description Api deletes product
+// @Tags product
 // @Accept json
 // @Produce json
-// @Succes 200 {Object} models.User
+// @Succes 200 {Object} model.Product
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/users/{id} [delete]
-func (h *handlerV1) DeleteUser(c *gin.Context) {
+// @Router /v1/product/{id} [delete]
+func (h *handlerV1) Delete(c *gin.Context) {
 	var jspbMarshal protojson.MarshalOptions
 	jspbMarshal.UseProtoNames = true
 
@@ -208,9 +219,9 @@ func (h *handlerV1) DeleteUser(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 
-	response, err := h.serviceManager.UserService().Delete(
-		ctx, &pbu.GetUserRequest{
-			UserId: guid,
+	response, err := h.serviceManager.ProductService().Delete(
+		ctx, &pbp.GetRequest{
+			Id: guid,
 		})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

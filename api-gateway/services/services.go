@@ -3,7 +3,7 @@ package services
 import (
 	"fmt"
 
-	config "go-exam/api-gateway/config"
+	"go-exam/api-gateway/config"
 	pbp "go-exam/api-gateway/genproto/product"
 	pbu "go-exam/api-gateway/genproto/user"
 
@@ -14,20 +14,20 @@ import (
 
 type IServiceManager interface {
 	UserService() pbu.UserServiceClient
-	PostService() pbp.ProductServiceClient
+	ProductService() pbp.ProductServiceClient
 }
 
 type serviceManager struct {
-	userService pbu.UserServiceClient
-	postService pbp.ProductServiceClient
+	userService    pbu.UserServiceClient
+	productService pbp.ProductServiceClient
 }
 
 func (s *serviceManager) UserService() pbu.UserServiceClient {
 	return s.userService
 }
 
-func (s *serviceManager) PostService() pbp.ProductServiceClient {
-	return s.postService
+func (s *serviceManager) ProductService() pbp.ProductServiceClient {
+	return s.productService
 }
 
 func NewServiceManager(conf *config.Config) (IServiceManager, error) {
@@ -48,8 +48,8 @@ func NewServiceManager(conf *config.Config) (IServiceManager, error) {
 	}
 
 	serviceManager := &serviceManager{
-		userService: pbu.NewUserServiceClient(connUser),
-		postService: pbp.NewProductServiceClient(connPost),
+		userService:    pbu.NewUserServiceClient(connUser),
+		productService: pbp.NewProductServiceClient(connPost),
 	}
 
 	return serviceManager, nil

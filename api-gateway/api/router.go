@@ -3,9 +3,9 @@ package api
 import (
 	_ "go-exam/api-gateway/api/docs" // swag
 	v1 "go-exam/api-gateway/api/handlers/v1"
-	config "go-exam/api-gateway/config"
+	"go-exam/api-gateway/config"
 	"go-exam/api-gateway/pkg/logger"
-	services "go-exam/api-gateway/services"
+	"go-exam/api-gateway/services"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -20,7 +20,7 @@ type Option struct {
 	ServiceManager services.IServiceManager
 }
 
-// @Title Welcome to RegisterPAGE
+// @Title Welcome to ProductAPI
 // @Version 1.0
 // @Description This is a example of Social Network
 // @Host localhost:8080
@@ -46,6 +46,13 @@ func New(option Option) *gin.Engine {
 	api.GET("/users", handlerV1.GetAll)
 	api.PUT("/users/:id", handlerV1.UpdateUser)
 	api.DELETE("/users/:id", handlerV1.DeleteUser)
+
+	// product
+	api.POST("/products", handlerV1.Create)
+	api.GET("/products/:id", handlerV1.Get)
+	api.GET("/products", handlerV1.GetAll)
+	api.PUT("/products/:id", handlerV1.Update)
+	api.DELETE("/products/:id", handlerV1.Delete)
 
 	// register
 	api.POST("/sign", handlerV1.SignUp)

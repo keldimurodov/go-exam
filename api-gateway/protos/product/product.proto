@@ -6,10 +6,10 @@ option go_package = "/product";
 
 service ProductService {
     rpc Create(Product) returns (Product);
-    rpc Get(GetProductRequest) returns (Product);
+    rpc Get(GetRequest) returns (Product);
     rpc GetAll(GetAllRequest) returns (GetAllResponse);
     rpc Update(Product) returns (Product);
-    rpc Delete(GetProductRequest) returns (Product);
+    rpc Delete(GetRequest) returns (Product);
 }
 
 message Product{
@@ -22,8 +22,8 @@ message Product{
     string deleted_at = 8;
 }
 
-message GetProductRequest {
-    int64 id = 1;
+message GetRequest{
+    string id = 1;
 }
 
 message GetAllRequest{

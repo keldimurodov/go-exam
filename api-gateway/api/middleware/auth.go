@@ -6,7 +6,7 @@ import (
 
 	m "go-exam/api-gateway/api/handlers/models"
 	token "go-exam/api-gateway/api/tokens"
-	config "go-exam/api-gateway/config"
+	"go-exam/api-gateway/config"
 
 	"github.com/casbin/casbin/v2"
 	jwtg "github.com/dgrijalva/jwt-go"

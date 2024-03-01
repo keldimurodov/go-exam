@@ -2,9 +2,9 @@ package v1
 
 import (
 	"go-exam/api-gateway/api/handlers/models"
-	config "go-exam/api-gateway/config"
+	"go-exam/api-gateway/config"
 	"go-exam/api-gateway/pkg/logger"
-	services "go-exam/api-gateway/services"
+	"go-exam/api-gateway/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

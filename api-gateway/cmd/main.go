@@ -2,9 +2,9 @@ package main
 
 import (
 	"go-exam/api-gateway/api"
-	config "go-exam/api-gateway/config"
+	"go-exam/api-gateway/config"
 	"go-exam/api-gateway/pkg/logger"
-	services "go-exam/api-gateway/services"
+	"go-exam/api-gateway/services"
 )
 
 func main() {
